@@ -82,7 +82,7 @@ end
 local visdir = 'results'
 lfs.mkdir('results')
 
-for i = 1,3 do 
+for i = 1,num_queries do 
   query_str = all_queries[i]
   filename_str = all_filenames[i]
   local txt = torch.zeros(1,opt.doc_length,#alphabet)
