@@ -53,8 +53,19 @@ local fea_txt = {}
 local raw_txt = {}
 local raw_img = {}
 
-all_queries = io.lines(opt.queries)
-all_filenames = io.lines(opt.filenames)
+
+count = 1
+all_queries = {}
+for query_str in io.lines(opt.queries) do
+  all_queries[count] = query_str
+  count = count + 1
+end
+all_filenames = {}
+count = 1
+for filename_str in io.lines(opt.filenames) do
+  all_filenames[count] = filename_str
+  count = count + 1
+end
 print(#all_queries, all_queries[1])
 print(#all_filenames, all_filenames[1])
 
