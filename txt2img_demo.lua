@@ -53,7 +53,7 @@ local fea_txt = {}
 local raw_txt = {}
 local raw_img = {}
 
-all_queries = io.lines(opt.queries)
+-- all_queries = io.lines(opt.queries)
 -- all_filenames = io.lines(opt.filenames)
 
 -- print(all_queries[0])
