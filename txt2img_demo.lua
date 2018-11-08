@@ -84,7 +84,7 @@ for i = 1,3 do
   end
   txt = txt:cuda()
   fea_txt = net_txt:forward(txt):clone()
-  print(fea_txt:size())
+  print(txt:size(), fea_txt:size())
 end
 
 -- for query_str in all_queries do
