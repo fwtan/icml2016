@@ -54,10 +54,10 @@ local raw_txt = {}
 local raw_img = {}
 
 all_queries = io.lines(opt.queries)
-all_filenames = io.lines(opt.filenames)
+-- all_filenames = io.lines(opt.filenames)
 
-print(all_queries[0])
-print(all_filenames[0])
+-- print(all_queries[0])
+-- print(all_filenames[0])
 
 -- for query_str in all_queries do
 --   local txt = torch.zeros(1,opt.doc_length,#alphabet)
