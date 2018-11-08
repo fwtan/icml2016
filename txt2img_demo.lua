@@ -109,30 +109,30 @@ if opt.gpu > 0 then
   noise = noise:cuda()
 end
 
-local html = '<html><body><h1>Generated Images</h1><table border="1px solid gray" style="width=100%"><tr><td><b>Caption</b></td><td><b>Image</b></td></tr>'
+-- local html = '<html><body><h1>Generated Images</h1><table border="1px solid gray" style="width=100%"><tr><td><b>Caption</b></td><td><b>Image</b></td></tr>'
 
-for i = 1,#fea_txt do
-  print(string.format('generating %d of %d', i, #fea_txt))
-  local cur_fea_txt = torch.repeatTensor(fea_txt[i], opt.batchSize, 1)
-  local cur_raw_txt = raw_txt[i]
-  if opt.noisetype == 'uniform' then
-    noise:uniform(-1, 1)
-  elseif opt.noisetype == 'normal' then
-    noise:normal(0, 1)
-  end
-  local images = net_gen:forward{noise, cur_fea_txt:cuda()}
-  local visdir = string.format('results/%s', opt.dataset)
-  lfs.mkdir('results')
-  lfs.mkdir(visdir)
-  local fname = string.format('%s/img_%d', visdir, i)
-  local fname_png = fname .. '.png'
-  local fname_txt = fname .. '.txt'
-  images:add(1):mul(0.5)
-  --image.save(fname_png, image.toDisplayTensor(images,4,torch.floor(opt.batchSize/4)))
-  image.save(fname_png, image.toDisplayTensor(images,4,opt.batchSize/2))
-  html = html .. string.format('\n<tr><td>%s</td><td><img src="%s"></td></tr>',
-                               cur_raw_txt, fname_png)
-  os.execute(string.format('echo "%s" > %s', cur_raw_txt, fname_txt))
-end
+-- for i = 1,#fea_txt do
+--   print(string.format('generating %d of %d', i, #fea_txt))
+--   local cur_fea_txt = torch.repeatTensor(fea_txt[i], opt.batchSize, 1)
+--   local cur_raw_txt = raw_txt[i]
+--   if opt.noisetype == 'uniform' then
+--     noise:uniform(-1, 1)
+--   elseif opt.noisetype == 'normal' then
+--     noise:normal(0, 1)
+--   end
+--   local images = net_gen:forward{noise, cur_fea_txt:cuda()}
+--   local visdir = string.format('results/%s', opt.dataset)
+--   lfs.mkdir('results')
+--   lfs.mkdir(visdir)
+--   local fname = string.format('%s/img_%d', visdir, i)
+--   local fname_png = fname .. '.png'
+--   local fname_txt = fname .. '.txt'
+--   images:add(1):mul(0.5)
+--   --image.save(fname_png, image.toDisplayTensor(images,4,torch.floor(opt.batchSize/4)))
+--   image.save(fname_png, image.toDisplayTensor(images,4,opt.batchSize/2))
+--   html = html .. string.format('\n<tr><td>%s</td><td><img src="%s"></td></tr>',
+--                                cur_raw_txt, fname_png)
+--   os.execute(string.format('echo "%s" > %s', cur_raw_txt, fname_txt))
+-- end
 
 
