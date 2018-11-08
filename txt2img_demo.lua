@@ -19,7 +19,7 @@ for k,v in pairs(dict) do
 end
 
 opt = {
-  filenames = 'val_filename.txt',
+  filenames = 'scripts/val_filename.txt',
   dataset = 'coco',
   batchSize = 8,        -- number of samples to produce
   noisetype = 'normal',  -- type of noise distribution (uniform / normal).
@@ -29,9 +29,9 @@ opt = {
   display = 0,           -- Display image: 0 = false, 1 = true
   nz = 100,              
   doc_length = 201,
-  queries = 'val_captions.txt',
+  queries = 'scripts/val_captions.txt',
   checkpoint_dir = '',
-  net_gen = '',
+  net_gen = 'coco_fast_t70_nc3_nt128_nz100_bs64_cls0.5_ngf196_ndf196_100_net_G.t7',
   net_txt = '',
 }
 
