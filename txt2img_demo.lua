@@ -70,6 +70,15 @@ end
 -- print(#all_filenames, all_filenames[1])
 
 num_queries = #all_queries
+
+if opt.gpu > 0 then
+  require 'cunn'
+  require 'cudnn'
+  net_gen:cuda()
+  net_txt:cuda()
+  noise = noise:cuda()
+end
+
 for i = 1,3 do 
   query_str = all_queries[i]
   filename_str = all_filenames[i]
@@ -84,7 +93,7 @@ for i = 1,3 do
   end
   txt = txt:cuda()
   fea_txt = net_txt:forward(txt):clone()
-  print(txt:size(), fea_txt:size())
+  -- print(txt:size(), fea_txt:size())
 end
 
 -- for query_str in all_queries do
@@ -100,14 +109,6 @@ end
 --   txt = txt:cuda()
 --   fea_txt[#fea_txt+1] = net_txt:forward(txt):clone()
 -- end
-
-if opt.gpu > 0 then
-  require 'cunn'
-  require 'cudnn'
-  net_gen:cuda()
-  net_txt:cuda()
-  noise = noise:cuda()
-end
 
 -- local html = '<html><body><h1>Generated Images</h1><table border="1px solid gray" style="width=100%"><tr><td><b>Caption</b></td><td><b>Image</b></td></tr>'
 
