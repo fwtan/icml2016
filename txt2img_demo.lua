@@ -32,7 +32,7 @@ opt = {
   queries = 'scripts/val_captions.txt',
   checkpoint_dir = 'ckpts',
   net_gen = 'coco_fast_t70_nc3_nt128_nz100_bs64_cls0.5_ngf196_ndf196_100_net_G.t7',
-  net_txt = '',
+  net_txt = 'coco_gru18_bs64_cls0.5_ngf128_ndf128_a10_c512_80_net_T.t7',
 }
 
 for k,v in pairs(opt) do opt[k] = tonumber(os.getenv(k)) or os.getenv(k) or opt[k] end
@@ -41,7 +41,7 @@ if opt.display == 0 then opt.display = false end
 
 noise = torch.Tensor(opt.batchSize, opt.nz, opt.imsize, opt.imsize)
 net_gen = torch.load(opt.checkpoint_dir .. '/' .. opt.net_gen)
-net_txt = torch.load(opt.net_txt)
+net_txt = torch.load(opt.checkpoint_dir .. '/' .. opt.net_txt)
 if net_txt.protos ~=nil then net_txt = net_txt.protos.enc_doc end
 
 net_gen:evaluate()
