@@ -21,7 +21,7 @@ end
 opt = {
   filenames = 'scripts/val_filename.txt',
   dataset = 'coco',
-  batchSize = 8,        -- number of samples to produce
+  batchSize = 1,         -- number of samples to produce
   noisetype = 'normal',  -- type of noise distribution (uniform / normal).
   imsize = 1,            -- used to produce larger images. 1 = 64px. 2 = 80px, 3 = 96px, ...
   noisemode = 'random',  -- random / line / linefull1d / linefull
@@ -79,10 +79,12 @@ if opt.gpu > 0 then
   noise = noise:cuda()
 end
 
+local visdir = 'results'
+lfs.mkdir('results')
+
 for i = 1,3 do 
   query_str = all_queries[i]
   filename_str = all_filenames[i]
-
   local txt = torch.zeros(1,opt.doc_length,#alphabet)
   for t = 1,opt.doc_length do
     local ch = query_str:sub(t,t)
@@ -93,7 +95,19 @@ for i = 1,3 do
   end
   txt = txt:cuda()
   fea_txt = net_txt:forward(txt):clone()
-  print(txt:size(), fea_txt:size())
+  -- print(txt:size(), fea_txt:size())
+  local cur_fea_txt = fea_txt
+  local cur_raw_txt = query_str
+  if opt.noisetype == 'uniform' then
+    noise:uniform(-1, 1)
+  elseif opt.noisetype == 'normal' then
+    noise:normal(0, 1)
+  end
+  local images = net_gen:forward{noise, cur_fea_txt:cuda()}
+  local fname = string.format('%s/%s.jpg', visdir, filename_str)
+  images:add(1):mul(0.5)
+  image.save(fname, image.toDisplayTensor(images))
+  print(i, fname)
 end
 
 -- for query_str in all_queries do
@@ -130,7 +144,7 @@ end
 --   local fname_txt = fname .. '.txt'
 --   images:add(1):mul(0.5)
 --   --image.save(fname_png, image.toDisplayTensor(images,4,torch.floor(opt.batchSize/4)))
---   image.save(fname_png, image.toDisplayTensor(images,4,opt.batchSize/2))
+--   image.save(fname_png, image.toDisplayTensor(images))
 --   html = html .. string.format('\n<tr><td>%s</td><td><img src="%s"></td></tr>',
 --                                cur_raw_txt, fname_png)
 --   os.execute(string.format('echo "%s" > %s', cur_raw_txt, fname_txt))
