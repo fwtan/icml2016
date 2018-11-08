@@ -106,9 +106,9 @@ for i = 1,3 do
   local images = net_gen:forward{noise, cur_fea_txt:cuda()}
   local fname = string.format('%s/%s.jpg', visdir, filename_str)
   images:add(1):mul(0.5)
-  print(images:size(), fname)
-  -- image.save(fname, images[1])
-  -- print(i, fname)
+  -- print(images:size(), fname)
+  image.save(fname, images[1])
+  print(i, fname)
 end
 
 -- for query_str in all_queries do
