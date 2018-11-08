@@ -30,7 +30,7 @@ opt = {
   nz = 100,              
   doc_length = 201,
   queries = 'scripts/val_captions.txt',
-  checkpoint_dir = '',
+  checkpoint_dir = 'ckpts',
   net_gen = 'coco_fast_t70_nc3_nt128_nz100_bs64_cls0.5_ngf196_ndf196_100_net_G.t7',
   net_txt = '',
 }
